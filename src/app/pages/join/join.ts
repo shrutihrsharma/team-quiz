@@ -12,6 +12,7 @@ import { GameSocketService } from '../../services/game-socket.service';
 export class JoinComponent {
   name = '';
   sessionId = '';
+  isHost = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,10 +20,11 @@ export class JoinComponent {
     private socket: GameSocketService,
   ) {
     this.sessionId = this.route.snapshot.paramMap.get('sessionId')!;
+    this.isHost = this.route.snapshot.queryParamMap.get('host') === 'true';
   }
 
   join() {
-    this.socket.connect(this.sessionId, this.name);
+    this.socket.connect(this.sessionId, this.name, this.isHost);
     this.router.navigate(['/game']);
   }
 }

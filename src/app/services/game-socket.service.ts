@@ -10,7 +10,8 @@ export class GameSocketService {
 
   state$ = new BehaviorSubject<any>(null);
 
-  connect(sessionId: string, name: string) {
+  connect(sessionId: string, name: string, isHost: boolean) {
+    this.isHost = isHost;
     this.ws = new WebSocket(
       `${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`,
     );
@@ -20,8 +21,9 @@ export class GameSocketService {
       this.ws.send(
         JSON.stringify({
           type: 'JOIN',
-          name,
-          host: this.isHost,
+          playerId: this.playerId,
+          name: name,
+          host: isHost,
         }),
       );
     };

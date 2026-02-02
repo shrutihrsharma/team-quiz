@@ -1,7 +1,14 @@
-<h2>Live Game State</h2>
-<div *ngIf="(state$ | async)?.hostId === socket.playerId">
+<h2>Game</h2>
+
+<div *ngIf="!(state$ | async)">
+  Waiting for game state…
+</div>
+
+<pre *ngIf="state$ | async as state">
+{{ state | json }}
+</pre>
+
+<div *ngIf="state?.hostId === socket.playerId">
   <input #q placeholder="Question" />
   <button (click)="start(q.value)">Start Question</button>
 </div>
-
-<pre>{{ state$ | async | json }}</pre>
