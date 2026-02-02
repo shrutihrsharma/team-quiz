@@ -14,4 +14,13 @@ export class GameComponent {
   constructor(private socket: GameSocketService) {
     this.state$ = this.socket.state$;
   }
+
+  start(question: string) {
+    this.socket.send({
+      type: 'START_QUESTION',
+      playerId: this.socket.playerId,
+      question,
+      duration: 30,
+    });
+  }
 }

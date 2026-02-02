@@ -4,21 +4,36 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class GameSocketService {
-  private socket!: WebSocket;
+  private ws!: WebSocket;
+  playerId!: string;
+  isHost = false;
 
   state$ = new BehaviorSubject<any>(null);
 
   connect(sessionId: string, name: string) {
-    this.socket = new WebSocket(
-      `${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`
+    this.ws = new WebSocket(
+      `${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`,
     );
 
-    this.socket.onopen = () => {
-      this.socket.send(JSON.stringify({ type: 'JOIN', name }));
+    this.ws.onopen = () => {
+      this.playerId = crypto.randomUUID();
+      this.ws.send(
+        JSON.stringify({
+          type: 'JOIN',
+          name,
+          host: this.isHost,
+        }),
+      );
     };
 
-    this.socket.onmessage = (event) => {
+    this.ws.onmessage = (event) => {
       this.state$.next(JSON.parse(event.data));
     };
+  }
+
+  send(payload: any) {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(payload));
+    }
   }
 }
