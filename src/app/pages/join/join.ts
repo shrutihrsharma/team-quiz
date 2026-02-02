@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './join.html',
   styleUrl: './join.css',
 })
-export class Join {
+export class JoinComponent {
 
 }

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { HostComponent } from './pages/host/host.component';
-import { JoinComponent } from './pages/join/join.component';
-import { GameComponent } from './pages/game/game.component';
+import { HomeComponent } from './pages/home/home';
+import { HostComponent } from './pages/host/host';
+import { JoinComponent } from './pages/join/join';
+import { GameComponent } from './pages/game/game';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
