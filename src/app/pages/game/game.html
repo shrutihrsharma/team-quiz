@@ -1,14 +1,14 @@
 <h2>Game</h2>
 
-<div *ngIf="!(state$ | async)">
-  Waiting for game state…
-</div>
+<div *ngIf="!(state$ | async)">Waiting for game state…</div>
 
-<pre *ngIf="state$ | async as state">
-{{ state | json }}
+<pre *ngIf="state$ | async as state"
+  >{{ state | json }}
+playerId: {{ socket.playerId }}
+hostId: {{ state?.hostId }}
 </pre>
 
-<div *ngIf="(state$ | async)?.hostId === playerId">
+<div *ngIf="(state$ | async)?.hostId === socket.playerId">
   <input #q placeholder="Question" />
   <button (click)="start(q.value)">Start Question</button>
 </div>

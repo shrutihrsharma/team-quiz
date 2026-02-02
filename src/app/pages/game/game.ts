@@ -11,10 +11,9 @@ import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
 })
 export class GameComponent {
   state$!: Observable<any>;
-  playerId!: string;
-  constructor(private socket: GameSocketService) {
+  constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
-    this.playerId = this.socket.playerId;
+
   }
 
   start(question: string) {
