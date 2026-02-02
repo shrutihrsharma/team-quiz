@@ -8,7 +8,7 @@
 {{ state | json }}
 </pre>
 
-<div *ngIf="state?.hostId === socket.playerId">
+<div *ngIf="(state$ | async)?.hostId === playerId">
   <input #q placeholder="Question" />
   <button (click)="start(q.value)">Start Question</button>
 </div>

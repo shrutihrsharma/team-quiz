@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { GameSocketService } from '../../services/game-socket.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [CommonModule, AsyncPipe, JsonPipe],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
 export class GameComponent {
   state$!: Observable<any>;
+  playerId!: string;
   constructor(private socket: GameSocketService) {
     this.state$ = this.socket.state$;
+    this.playerId = this.socket.playerId;
   }
 
   start(question: string) {
