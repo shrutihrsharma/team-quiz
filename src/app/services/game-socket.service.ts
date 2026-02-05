@@ -7,10 +7,13 @@ export class GameSocketService {
   private ws!: WebSocket;
   playerId!: string;
   isHost = false;
+  sessionId!: string;
+
 
   state$ = new BehaviorSubject<any>(null);
 
   connect(sessionId: string, name: string, isHost: boolean) {
+    this.sessionId = sessionId;
     this.isHost = isHost;
     this.ws = new WebSocket(
       `${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`,

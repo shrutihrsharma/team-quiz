@@ -1,0 +1,22 @@
+.buzz-btn {
+  font-size: 28px;
+  padding: 20px 40px;
+  margin: 20px 0;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buzz-btn:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
+.share-box {
+  padding: 10px;
+  border: 1px dashed #ccc;
+  margin-bottom: 15px;
+}
+

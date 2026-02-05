@@ -11,6 +11,7 @@ import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
 })
 export class GameComponent {
   state$!: Observable<any>;
+  origin = window.location.origin;
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
   }
@@ -38,4 +39,24 @@ export class GameComponent {
       playerId: this.socket.playerId,
     });
   }
+
+  buzz() {
+    this.socket.send({
+      type: 'BUZZ',
+      playerId: this.socket.playerId,
+    });
+  }
+
+  getWinner(state: any) {
+    if (!state?.currentBuzzPlayerId) return null;
+
+    return state.players?.find((p: any) => p.id === state.currentBuzzPlayerId);
+  }
+
+  copyLink() {
+  const link = `${window.location.origin}/join/${this.socket.sessionId}`;
+  navigator.clipboard.writeText(link);
+  alert('Join link copied!');
+}
+
 }

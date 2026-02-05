@@ -3,11 +3,47 @@
 <div *ngIf="!(state$ | async)">Waiting for game state…</div>
 
 <ng-container *ngIf="state$ | async as state">
+  <div *ngIf="state.hostId === socket.playerId" class="share-box">
+    <p><strong>Invite players:</strong></p>
+
+    <p>
+      <a [href]="'/join/' + socket.sessionId" target="_blank">
+        {{ origin }}/join/{{ socket.sessionId }}
+      </a>
+    </p>
+
+    <button (click)="copyLink()">📋 Copy Link</button>
+
+    <p>
+      Or share code: <strong>{{ socket.sessionId }}</strong>
+    </p>
+  </div>
+
+  <h3>Scores</h3>
+  <ul>
+    <li *ngFor="let p of state.players">{{ p.name }} ({{ p.team }}) — {{ p.score }}</li>
+  </ul>
+
   <pre
     >{{ state | json }}
 playerId: {{ socket.playerId }}
 hostId: {{ state.hostId }}
   </pre>
+
+  <h3 *ngIf="state.question">
+    {{ state.question }}
+  </h3>
+
+  <button
+    class="buzz-btn"
+    [disabled]="state.phase !== 'QUESTION_LIVE' || !state.buzzerEnabled"
+    (click)="buzz()"
+  >
+    🔴 BUZZ
+  </button>
+  <div *ngIf="getWinner(state) as winner">
+    <h2>{{ winner.name }} ({{ winner.team }}) buzzed first!</h2>
+  </div>
 
   <div *ngIf="state.hostId === socket.playerId">
     <input #q placeholder="Question" />
