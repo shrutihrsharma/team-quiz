@@ -13,7 +13,6 @@ export class GameComponent {
   state$!: Observable<any>;
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
-
   }
 
   start(question: string) {
@@ -22,6 +21,21 @@ export class GameComponent {
       playerId: this.socket.playerId,
       question,
       duration: 30,
+    });
+  }
+
+  showQuestion(question: string) {
+    this.socket.send({
+      type: 'SHOW_QUESTION',
+      playerId: this.socket.playerId,
+      question,
+    });
+  }
+
+  enableBuzzers() {
+    this.socket.send({
+      type: 'ENABLE_BUZZERS',
+      playerId: this.socket.playerId,
     });
   }
 }

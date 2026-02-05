@@ -9,6 +9,13 @@ hostId: {{ state?.hostId }}
 </pre>
 
 <div *ngIf="(state$ | async)?.hostId === socket.playerId">
-  <input #q placeholder="Question" />
-  <button (click)="start(q.value)">Start Question</button>
+  <div *ngIf="state?.hostId === socket.playerId">
+    <input #q placeholder="Question" />
+
+    <button (click)="showQuestion(q.value)">Show Question</button>
+
+    <button (click)="enableBuzzers()" [disabled]="state?.phase !== 'QUESTION_DISPLAYED'">
+      Enable Buzzers
+    </button>
+  </div>
 </div>
