@@ -1,5 +1,4 @@
 <div class="game-container" *ngIf="state$ | async as state">
-
   <!-- HEADER -->
   <header class="game-header">
     <h1>🎮 Team Quiz Night</h1>
@@ -11,6 +10,8 @@
   </header>
 
   <!-- QUESTION AREA -->
+  <h4 *ngIf="state.roundName">Round: {{ state.roundName }}</h4>
+
   <section class="question-area">
     <h2 *ngIf="state.question; else waiting">
       {{ state.question }}
@@ -23,7 +24,6 @@
 
   <!-- ACTION AREA -->
   <section class="action-area">
-
     <!-- BUZZ BUTTON -->
     <button
       *ngIf="state.phase !== 'ENDED'"
@@ -38,7 +38,6 @@
     <div class="winner-banner" *ngIf="getWinner(state) as winner">
       🔥 <b>{{ winner.name }}</b> ({{ winner.team }}) buzzed first!
     </div>
-
   </section>
 
   <!-- SCORES -->
@@ -53,17 +52,13 @@
 
   <!-- HOST PANEL -->
   <section *ngIf="state.hostId === socket.playerId" class="host-panel">
-
     <h3>👑 Host Controls</h3>
 
     <button *ngIf="state.phase === 'WAITING'" (click)="nextQuestion()">
       ▶️ Start Next Question
     </button>
 
-    <button
-      *ngIf="state.phase === 'QUESTION_DISPLAYED'"
-      (click)="enableBuzzers()"
-    >
+    <button *ngIf="state.phase === 'QUESTION_DISPLAYED'" (click)="enableBuzzers()">
       🔔 Enable Buzzers
     </button>
 
@@ -73,7 +68,6 @@
     </div>
 
     <button (click)="endGame()">🏁 End Game</button>
-
   </section>
 
   <!-- GAME OVER -->
@@ -81,5 +75,4 @@
     <h1>🏁 Game Over</h1>
     <h2>🏆 {{ getWinningTeam(state.players) }} Wins!</h2>
   </section>
-
 </div>
