@@ -72,4 +72,26 @@ export class GameComponent {
       playerId: this.socket.playerId,
     });
   }
+
+  nextQuestion() {
+    this.socket.send({
+      type: 'NEXT_QUESTION',
+      playerId: this.socket.playerId,
+    });
+  }
+
+  endGame() {
+    this.socket.send({
+      type: 'END_GAME',
+      playerId: this.socket.playerId,
+    });
+  }
+
+  getTeamScores(players: any[]) {
+    const scores: Record<string, number> = {};
+    players.forEach((p) => {
+      scores[p.team] = (scores[p.team] || 0) + p.score;
+    });
+    return scores;
+  }
 }
