@@ -15,16 +15,10 @@
     >
   </div>
 
-  <div *ngIf="state.phase === 'ENDED'">
-    <h2>🏆 Game Over!</h2>
+  <div *ngIf="state.phase === 'ENDED'" class="game-over">
+    <h2>🏁 Game Over</h2>
+    <h1>🏆 {{ getWinningTeam(state.players) }} Wins!</h1>
   </div>
-
-  <h3>Team Scores</h3>
-  <ul>
-    <li *ngFor="let team of getTeamScores(state.players) | keyvalue">
-      {{ team.key }} — {{ team.value }}
-    </li>
-  </ul>
 
   <!-- QUESTION -->
   <div class="question-box" *ngIf="state.question">
@@ -39,6 +33,7 @@
   <!-- BUZZ BUTTON -->
   <div class="buzz-container">
     <button
+      *ngIf="state.phase !== 'ENDED'"
       class="buzz-btn"
       [disabled]="state.phase !== 'QUESTION_LIVE' || !state.buzzerEnabled"
       (click)="buzz()"
@@ -49,6 +44,15 @@
 
   <!-- SCOREBOARD -->
   <div class="scoreboard">
+    <div class="team-scores">
+      <h3>🏆 Team Scores</h3>
+      <ul>
+        <li *ngFor="let team of getTeamScores(state.players) | keyvalue">
+          {{ team.key }} — <b>{{ team.value }}</b>
+        </li>
+      </ul>
+    </div>
+
     <h3>Scores</h3>
     <ul>
       <li *ngFor="let p of state.players">
@@ -68,6 +72,7 @@
       <button (click)="enableBuzzers()" [disabled]="state.phase !== 'QUESTION_DISPLAYED'">
         Enable Buzzers
       </button>
+      <div *ngIf="state.phase === 'QUESTION_LIVE'">Buzzers active…</div>
     </div>
 
     <div *ngIf="state.currentBuzzPlayerId" class="judge-actions">
