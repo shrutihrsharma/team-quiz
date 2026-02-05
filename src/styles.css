@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+.game-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question-area {
+  margin: 30px 0;
+  text-align: center;
+  font-size: 22px;
+}
+
+.action-area {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buzz-btn {
+  font-size: 28px;
+  padding: 18px 48px;
+  border-radius: 12px;
+}
+
+.winner-banner {
+  margin-top: 16px;
+  font-size: 20px;
+}
+
+.scores-area {
+  margin-top: 20px;
+}
+
+.host-panel {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+}
+
+.game-over {
+  text-align: center;
+  margin-top: 40px;
+}

@@ -1,37 +1,30 @@
-<h2>🎮 Team Quiz</h2>
+<div class="game-container" *ngIf="state$ | async as state">
 
-<div *ngIf="!(state$ | async)">Waiting for game state…</div>
+  <!-- HEADER -->
+  <header class="game-header">
+    <h1>🎮 Team Quiz Night</h1>
 
-<ng-container *ngIf="state$ | async as state">
-  <!-- HOST: Invite players -->
-  <div *ngIf="state.hostId === socket.playerId" class="share-box">
-    <strong>Invite players</strong>
-    <div class="invite-row">
+    <div *ngIf="state.hostId === socket.playerId" class="share-box">
       <span>{{ origin }}/join/{{ socket.sessionId }}</span>
       <button (click)="copyLink()">📋 Copy</button>
     </div>
-    <small
-      >Or join with code: <b>{{ socket.sessionId }}</b></small
-    >
-  </div>
+  </header>
 
-  <div *ngIf="state.phase === 'ENDED'" class="game-over">
-    <h2>🏁 Game Over</h2>
-    <h1>🏆 {{ getWinningTeam(state.players) }} Wins!</h1>
-  </div>
+  <!-- QUESTION AREA -->
+  <section class="question-area">
+    <h2 *ngIf="state.question; else waiting">
+      {{ state.question }}
+    </h2>
 
-  <!-- QUESTION -->
-  <div class="question-box" *ngIf="state.question">
-    <h2>{{ state.question }}</h2>
-  </div>
+    <ng-template #waiting>
+      <h2>Waiting for next question…</h2>
+    </ng-template>
+  </section>
 
-  <!-- WINNER BANNER -->
-  <div class="winner-banner" *ngIf="getWinner(state) as winner">
-    🔥 <b>{{ winner.name }}</b> ({{ winner.team }}) buzzed first!
-  </div>
+  <!-- ACTION AREA -->
+  <section class="action-area">
 
-  <!-- BUZZ BUTTON -->
-  <div class="buzz-container">
+    <!-- BUZZ BUTTON -->
     <button
       *ngIf="state.phase !== 'ENDED'"
       class="buzz-btn"
@@ -40,47 +33,53 @@
     >
       🔴 BUZZ
     </button>
-  </div>
 
-  <!-- SCOREBOARD -->
-  <div class="scoreboard">
-    <div class="team-scores">
-      <h3>🏆 Team Scores</h3>
-      <ul>
-        <li *ngFor="let team of getTeamScores(state.players) | keyvalue">
-          {{ team.key }} — <b>{{ team.value }}</b>
-        </li>
-      </ul>
+    <!-- WINNER -->
+    <div class="winner-banner" *ngIf="getWinner(state) as winner">
+      🔥 <b>{{ winner.name }}</b> ({{ winner.team }}) buzzed first!
     </div>
 
-    <h3>Scores</h3>
+  </section>
+
+  <!-- SCORES -->
+  <section class="scores-area">
+    <h3>🏆 Team Scores</h3>
     <ul>
-      <li *ngFor="let p of state.players">
-        {{ p.name }} <small>({{ p.team }})</small> — <b>{{ p.score }}</b>
+      <li *ngFor="let team of getTeamScores(state.players) | keyvalue">
+        {{ team.key }} — <b>{{ team.value }}</b>
       </li>
     </ul>
-  </div>
+  </section>
 
-  <!-- HOST CONTROLS -->
-  <div *ngIf="state.hostId === socket.playerId" class="host-panel">
-    <h3>Host Controls</h3>
+  <!-- HOST PANEL -->
+  <section *ngIf="state.hostId === socket.playerId" class="host-panel">
 
-    <input #q placeholder="Enter question" />
+    <h3>👑 Host Controls</h3>
 
-    <div class="host-actions">
-      <button (click)="showQuestion(q.value)">Show Question</button>
-      <button (click)="enableBuzzers()" [disabled]="state.phase !== 'QUESTION_DISPLAYED'">
-        Enable Buzzers
-      </button>
-      <div *ngIf="state.phase === 'QUESTION_LIVE'">Buzzers active…</div>
-    </div>
+    <button *ngIf="state.phase === 'WAITING'" (click)="nextQuestion()">
+      ▶️ Start Next Question
+    </button>
 
-    <div *ngIf="state.currentBuzzPlayerId" class="judge-actions">
+    <button
+      *ngIf="state.phase === 'QUESTION_DISPLAYED'"
+      (click)="enableBuzzers()"
+    >
+      🔔 Enable Buzzers
+    </button>
+
+    <div *ngIf="state.currentBuzzPlayerId">
       <button class="correct" (click)="markCorrect()">✅ Correct</button>
       <button class="wrong" (click)="markWrong()">❌ Wrong</button>
     </div>
 
-    <button (click)="nextQuestion()">➡️ Next Question</button>
     <button (click)="endGame()">🏁 End Game</button>
-  </div>
-</ng-container>
+
+  </section>
+
+  <!-- GAME OVER -->
+  <section *ngIf="state.phase === 'ENDED'" class="game-over">
+    <h1>🏁 Game Over</h1>
+    <h2>🏆 {{ getWinningTeam(state.players) }} Wins!</h2>
+  </section>
+
+</div>
