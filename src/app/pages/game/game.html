@@ -2,20 +2,20 @@
 
 <div *ngIf="!(state$ | async)">Waiting for game state…</div>
 
-<pre *ngIf="state$ | async as state"
-  >{{ state | json }}
+<ng-container *ngIf="state$ | async as state">
+  <pre
+    >{{ state | json }}
 playerId: {{ socket.playerId }}
-hostId: {{ state?.hostId }}
-</pre>
+hostId: {{ state.hostId }}
+  </pre>
 
-<div *ngIf="(state$ | async)?.hostId === socket.playerId">
-  <div *ngIf="state?.hostId === socket.playerId">
+  <div *ngIf="state.hostId === socket.playerId">
     <input #q placeholder="Question" />
 
     <button (click)="showQuestion(q.value)">Show Question</button>
 
-    <button (click)="enableBuzzers()" [disabled]="state?.phase !== 'QUESTION_DISPLAYED'">
+    <button (click)="enableBuzzers()" [disabled]="state.phase !== 'QUESTION_DISPLAYED'">
       Enable Buzzers
     </button>
   </div>
-</div>
+</ng-container>
