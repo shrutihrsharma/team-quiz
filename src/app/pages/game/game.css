@@ -1,22 +1,68 @@
-.buzz-btn {
-  font-size: 28px;
-  padding: 20px 40px;
-  margin: 20px 0;
-  background: red;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.buzz-btn:disabled {
-  background: grey;
-  cursor: not-allowed;
-}
-
 .share-box {
-  padding: 10px;
   border: 1px dashed #ccc;
+  padding: 10px;
   margin-bottom: 15px;
 }
 
+.invite-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.question-box {
+  margin: 20px 0;
+  font-size: 22px;
+}
+
+.buzz-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.buzz-btn {
+  font-size: 28px;
+  padding: 20px 50px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 12px;
+}
+
+.buzz-btn:disabled {
+  background: #aaa;
+}
+
+.winner-banner {
+  background: #fff3cd;
+  padding: 12px;
+  margin: 15px 0;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.scoreboard {
+  margin-top: 20px;
+}
+
+.host-panel {
+  margin-top: 25px;
+  padding: 15px;
+  border-top: 2px solid #eee;
+}
+
+.host-actions button,
+.judge-actions button {
+  margin-right: 10px;
+}
+
+.correct {
+  background: #4caf50;
+  color: white;
+}
+
+.wrong {
+  background: #f44336;
+  color: white;
+}

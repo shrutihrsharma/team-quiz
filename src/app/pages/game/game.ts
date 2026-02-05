@@ -54,9 +54,22 @@ export class GameComponent {
   }
 
   copyLink() {
-  const link = `${window.location.origin}/join/${this.socket.sessionId}`;
-  navigator.clipboard.writeText(link);
-  alert('Join link copied!');
-}
+    const link = `${window.location.origin}/join/${this.socket.sessionId}`;
+    navigator.clipboard.writeText(link);
+    alert('Join link copied!');
+  }
 
+  markCorrect() {
+    this.socket.send({
+      type: 'MARK_CORRECT',
+      playerId: this.socket.playerId,
+    });
+  }
+
+  markWrong() {
+    this.socket.send({
+      type: 'MARK_WRONG',
+      playerId: this.socket.playerId,
+    });
+  }
 }
