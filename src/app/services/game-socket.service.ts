@@ -9,25 +9,24 @@ export class GameSocketService {
   isHost = false;
   sessionId!: string;
 
-
   state$ = new BehaviorSubject<any>(null);
 
   connect(sessionId: string, name: string, isHost: boolean) {
     this.sessionId = sessionId;
     this.isHost = isHost;
-    this.ws = new WebSocket(
-      `${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`,
-    );
+    this.ws = new WebSocket(`${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`);
 
     this.ws.onopen = () => {
-      this.playerId = crypto.randomUUID();
+      console.log('Sending JOIN');
+      this.playerId = localStorage.getItem('playerId') || crypto.randomUUID();
+      localStorage.setItem('playerId', this.playerId);
       this.ws.send(
         JSON.stringify({
           type: 'JOIN',
           playerId: this.playerId,
           name: name,
           host: isHost,
-          hostToken: localStorage.getItem('hostToken')
+          hostToken: localStorage.getItem('hostToken'),
         }),
       );
     };
