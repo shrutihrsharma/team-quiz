@@ -27,6 +27,7 @@ export class GameSocketService {
           playerId: this.playerId,
           name: name,
           host: isHost,
+          hostToken: localStorage.getItem('hostToken')
         }),
       );
     };

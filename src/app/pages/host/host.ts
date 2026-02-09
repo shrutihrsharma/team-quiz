@@ -12,10 +12,24 @@ export class HostComponent {
   constructor(private router: Router) {}
 
   async createGame() {
-    const res = await fetch(`${environment.backendUrl}/create`);
-    const data = await res.json();
-    this.router.navigate(['/join', data.sessionId], {
-      queryParams: { host: 'true' },
-    });
+    try {
+      const res = await fetch(`${environment.backendUrl}/create`);
+
+      if (!res.ok) {
+        throw new Error('Failed to create session');
+      }
+
+      const data = await res.json();
+
+      // ⭐ Save host token (important for reconnect + auth)
+      localStorage.setItem('hostToken', data.hostToken);
+
+      this.router.navigate(['/join', data.sessionId], {
+        queryParams: { host: 'true' },
+      });
+    } catch (err) {
+      console.error('Session creation error:', err);
+      alert('Unable to create game session. Try again.');
+    }
   }
 }
