@@ -113,18 +113,7 @@ export class GameComponent implements OnInit {
     return scores;
   }
 
-  getWinningTeam(players: any[]) {
-    const teamScores = this.getTeamScores(players);
-    let winner = null;
-    let max = -1;
-
-    for (const team in teamScores) {
-      if (teamScores[team] > max) {
-        max = teamScores[team];
-        winner = team;
-      }
-    }
-
-    return winner;
+  getPlayersSortedByScore(players: any[]) {
+    return players.sort((a, b) => b.score - a.score);
   }
 }

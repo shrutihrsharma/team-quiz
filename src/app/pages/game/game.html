@@ -1,5 +1,9 @@
-<div class="game-container" *ngIf="state$ | async as state" [class.host-view]="state.hostId === socket.playerId" [class.player-view]="state.hostId !== socket.playerId">
-
+<div
+  class="game-container"
+  *ngIf="state$ | async as state"
+  [class.host-view]="state.hostId === socket.playerId"
+  [class.player-view]="state.hostId !== socket.playerId"
+>
   <!-- HEADER -->
   <header class="game-header">
     <h1>🎮 Team Quiz Night</h1>
@@ -12,11 +16,8 @@
 
   <!-- ================= NORMAL GAME VIEW ================= -->
   <ng-container *ngIf="state.phase !== 'ENDED'; else leaderboardView">
-
     <!-- ROUND INFO -->
-    <div class="round-info" *ngIf="state.roundName">
-      ⭐ Round: {{ state.roundName }}
-    </div>
+    <div class="round-info" *ngIf="state.roundName">⭐ Round: {{ state.roundName }}</div>
 
     <!-- QUESTION AREA -->
     <section class="question-area">
@@ -25,9 +26,7 @@
       </div>
 
       <ng-template #waiting>
-        <div class="question-card waiting">
-          ⏳ Waiting for next question…
-        </div>
+        <div class="question-card waiting">⏳ Waiting for next question…</div>
       </ng-template>
     </section>
 
@@ -36,7 +35,8 @@
       <button
         class="buzz-btn"
         [disabled]="state.phase !== 'QUESTION_LIVE' || !state.buzzerEnabled"
-        (click)="buzz()">
+        (click)="buzz()"
+      >
         🔴 BUZZ NOW
       </button>
 
@@ -75,7 +75,6 @@
 
       <button class="end-btn" (click)="endGame()">🏁 End Game</button>
     </section>
-
   </ng-container>
 
   <!-- ================= LEADERBOARD VIEW ================= -->
@@ -87,9 +86,9 @@
       <div class="leaderboard-list">
         <div
           class="leaderboard-item"
-          *ngFor="let p of state.players | orderBy: 'score':true"
-          [class.winner]="p.score === getTopScore(state.players)">
-
+          *ngFor="let p of getPlayersSortedByScore(state.players)"
+          [class.winner]="p.score === state.topScore"
+        >
           <span class="name">{{ p.name }}</span>
           <span class="team">({{ p.team }})</span>
           <span class="score">{{ p.score }}</span>
@@ -97,11 +96,10 @@
       </div>
 
       <!-- WINNER QR REWARD -->
-      <div class="winner-reward" *ngIf="getIndividualWinner(state.players) as winner">
+      <div class="winner-reward" *ngIf="state.individualWinner as winner">
         <h2>🎉 Winner: {{ winner.name }}</h2>
 
         <div class="qr-box">
-          <!-- Replace src dynamically later -->
           <img src="assets/reward-qr.png" alt="Reward QR" />
         </div>
 
@@ -109,5 +107,4 @@
       </div>
     </section>
   </ng-template>
-
 </div>
