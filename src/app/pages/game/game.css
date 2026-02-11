@@ -1,9 +1,4 @@
 
-body {
-  background: linear-gradient(120deg,#eef2f7,#dfe9f3);
-  font-family: 'Segoe UI', system-ui, sans-serif;
-}
-
 /* HEADER */
 .game-header {
   display:flex;

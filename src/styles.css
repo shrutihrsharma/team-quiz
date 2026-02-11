@@ -1,49 +1,5 @@
-.game-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 16px;
-  font-family: Arial, sans-serif;
-}
 
-.game-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.question-area {
-  margin: 30px 0;
-  text-align: center;
-  font-size: 22px;
-}
-
-.action-area {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.buzz-btn {
-  font-size: 28px;
-  padding: 18px 48px;
-  border-radius: 12px;
-}
-
-.winner-banner {
-  margin-top: 16px;
-  font-size: 20px;
-}
-
-.scores-area {
-  margin-top: 20px;
-}
-
-.host-panel {
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 2px solid #eee;
-}
-
-.game-over {
-  text-align: center;
-  margin-top: 40px;
+body {
+  background: linear-gradient(120deg,#eef2f7,#dfe9f3);
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
