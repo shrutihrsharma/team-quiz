@@ -116,4 +116,11 @@ export class GameComponent implements OnInit {
   getPlayersSortedByScore(players: any[]) {
     return players.sort((a, b) => b.score - a.score);
   }
+
+  skipQuestion() {
+    this.socket.send({
+      type: 'SKIP_QUESTION',
+      playerId: this.socket.playerId,
+    });
+  }
 }

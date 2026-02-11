@@ -6,11 +6,17 @@
 >
   <!-- HEADER -->
   <header class="game-header">
-    <h1>🎮 Team Quiz Night</h1>
+    <h1>🎮 NaaS Team Quiz</h1>
 
     <div class="player-info" *ngIf="state.phase !== 'ENDED'">
       👤 {{ getCurrentPlayer(state)?.name }}
       <span class="team">({{ getCurrentPlayer(state)?.team }})</span>
+    </div>
+
+    <div *ngIf="state.hostId === socket.playerId && state.phase !== 'ENDED'" class="share-box">
+      <span class="invite-link"> {{ origin }}/join/{{ socket.sessionId }} </span>
+
+      <button (click)="copyLink()">📋 Copy Invite</button>
     </div>
   </header>
 
@@ -63,6 +69,8 @@
       <button *ngIf="state.phase === 'WAITING'" (click)="nextQuestion()">
         ▶️ Start Next Question
       </button>
+
+      <button *ngIf="state.phase !== 'WAITING'" (click)="skipQuestion()">⏭ Skip Question</button>
 
       <button *ngIf="state.phase === 'QUESTION_DISPLAYED'" (click)="enableBuzzers()">
         🔔 Enable Buzzers
