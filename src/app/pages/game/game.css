@@ -1,11 +1,19 @@
 
+/* HOST vs PLAYER DIFFERENTIATION */
+.host-view .game-header {
+  background: linear-gradient(90deg,#ff7a18,#ffb347);
+}
+
+.player-view .game-header {
+  background: linear-gradient(90deg,#6a11cb,#2575fc);
+}
+
 /* HEADER */
 .game-header {
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:15px 20px;
-  background:linear-gradient(90deg,#6a11cb,#2575fc);
   color:white;
   border-radius:12px;
 }
