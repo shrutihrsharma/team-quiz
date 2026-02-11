@@ -24,6 +24,9 @@ export class JoinComponent {
   }
 
   join() {
+    localStorage.setItem('playerName', this.name);
+    localStorage.setItem('sessionId', this.sessionId);
+
     this.socket.connect(this.sessionId, this.name, this.isHost);
     this.router.navigate(['/game']);
   }

@@ -12,6 +12,12 @@ export class GameSocketService {
   state$ = new BehaviorSubject<any>(null);
 
   connect(sessionId: string, name: string, isHost: boolean) {
+    console.log('Connecting to session:', sessionId);
+
+    if (this.ws) {
+      this.ws.close();
+    }
+
     this.sessionId = sessionId;
     this.isHost = isHost;
     this.ws = new WebSocket(`${environment.backendUrl.replace('https', 'wss')}/join/${sessionId}`);

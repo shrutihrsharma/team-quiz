@@ -20,9 +20,12 @@ export class GameComponent implements OnInit {
     const playerName = localStorage.getItem('playerName');
     const hostToken = localStorage.getItem('hostToken');
 
-    if (sessionId && playerName) {
-      this.socket.connect(sessionId, playerName, !!hostToken);
+    if (!sessionId) {
+      console.error('No sessionId found');
+      return;
     }
+
+    this.socket.connect(sessionId, playerName || 'Unknown', !!hostToken);
   }
 
   start(question: string) {
