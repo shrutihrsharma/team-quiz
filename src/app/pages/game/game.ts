@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameSocketService } from '../../services/game-socket.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
@@ -9,11 +9,20 @@ import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   state$!: Observable<any>;
   origin = window.location.origin;
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
+  }
+  ngOnInit(): void {
+    const sessionId = localStorage.getItem('sessionId');
+    const playerName = localStorage.getItem('playerName');
+    const hostToken = localStorage.getItem('hostToken');
+
+    if (sessionId && playerName) {
+      this.socket.connect(sessionId, playerName, !!hostToken);
+    }
   }
 
   start(question: string) {

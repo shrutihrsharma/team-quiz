@@ -23,6 +23,8 @@ export class HostComponent {
 
       // ⭐ Save host token (important for reconnect + auth)
       localStorage.setItem('hostToken', data.hostToken);
+      localStorage.setItem('sessionId', data.sessionId);
+
 
       this.router.navigate(['/join', data.sessionId], {
         queryParams: { host: 'true' },
