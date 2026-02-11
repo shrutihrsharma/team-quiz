@@ -1,56 +1,65 @@
 <div class="game-container" *ngIf="state$ | async as state">
+
   <!-- HEADER -->
   <header class="game-header">
     <h1>🎮 Team Quiz Night</h1>
 
+    <div class="player-info">
+      👤 {{ getCurrentPlayer(state)?.name }}
+      <span class="team">({{ getCurrentPlayer(state)?.team }})</span>
+    </div>
+
     <div *ngIf="state.hostId === socket.playerId" class="share-box">
       <span>{{ origin }}/join/{{ socket.sessionId }}</span>
-      <button (click)="copyLink()">📋 Copy</button>
+      <button (click)="copyLink()">📋 Copy Invite</button>
     </div>
   </header>
 
-  <!-- QUESTION AREA -->
-  <h4 *ngIf="state.roundName">Round: {{ state.roundName }}</h4>
+  <!-- ROUND INFO -->
+  <div class="round-info" *ngIf="state.roundName">
+    ⭐ Round: {{ state.roundName }}
+  </div>
 
+  <!-- QUESTION FOCUS AREA -->
   <section class="question-area">
-    <h2 *ngIf="state.question; else waiting">
+    <div class="question-card" *ngIf="state.question; else waiting">
       {{ state.question }}
-    </h2>
+    </div>
 
     <ng-template #waiting>
-      <h2>Waiting for next question…</h2>
+      <div class="question-card waiting">
+        ⏳ Waiting for next question…
+      </div>
     </ng-template>
   </section>
 
-  <!-- ACTION AREA -->
+  <!-- BUZZER AREA -->
   <section class="action-area">
-    <!-- BUZZ BUTTON -->
     <button
       *ngIf="state.phase !== 'ENDED'"
       class="buzz-btn"
       [disabled]="state.phase !== 'QUESTION_LIVE' || !state.buzzerEnabled"
-      (click)="buzz()"
-    >
-      🔴 BUZZ
+      (click)="buzz()">
+      🔴 BUZZ NOW
     </button>
 
-    <!-- WINNER -->
     <div class="winner-banner" *ngIf="getWinner(state) as winner">
-      🔥 <b>{{ winner.name }}</b> ({{ winner.team }}) buzzed first!
+      ⚡ {{ winner.name }} ({{ winner.team }}) buzzed first!
     </div>
   </section>
 
-  <!-- SCORES -->
+  <!-- TEAM SCOREBOARD -->
   <section class="scores-area">
     <h3>🏆 Team Scores</h3>
-    <ul>
-      <li *ngFor="let team of getTeamScores(state.players) | keyvalue">
-        {{ team.key }} — <b>{{ team.value }}</b>
-      </li>
-    </ul>
+    <div class="scores-grid">
+      <div class="team-score" *ngFor="let team of getTeamScores(state.players) | keyvalue">
+        <div class="team-name">{{ team.key }}</div>
+        <div class="team-points">{{ team.value }}</div>
+      </div>
+    </div>
   </section>
 
-  <!-- HOST PANEL -->
+  <!-- HOST CONTROLS -->
   <section *ngIf="state.hostId === socket.playerId" class="host-panel">
     <h3>👑 Host Controls</h3>
 
@@ -62,12 +71,12 @@
       🔔 Enable Buzzers
     </button>
 
-    <div *ngIf="state.currentBuzzPlayerId">
+    <div *ngIf="state.currentBuzzPlayerId" class="answer-controls">
       <button class="correct" (click)="markCorrect()">✅ Correct</button>
       <button class="wrong" (click)="markWrong()">❌ Wrong</button>
     </div>
 
-    <button (click)="endGame()">🏁 End Game</button>
+    <button class="end-btn" (click)="endGame()">🏁 End Game</button>
   </section>
 
   <!-- GAME OVER -->
@@ -75,4 +84,6 @@
     <h1>🏁 Game Over</h1>
     <h2>🏆 {{ getWinningTeam(state.players) }} Wins!</h2>
   </section>
+
 </div>
+

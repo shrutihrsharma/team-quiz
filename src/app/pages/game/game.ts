@@ -12,6 +12,8 @@ import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
 export class GameComponent implements OnInit {
   state$!: Observable<any>;
   origin = window.location.origin;
+  playerName = localStorage.getItem('playerName') || 'Player';
+
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
   }
@@ -26,6 +28,10 @@ export class GameComponent implements OnInit {
     }
 
     this.socket.connect(sessionId, playerName || 'Unknown', !!hostToken);
+  }
+
+  getCurrentPlayer(state: any) {
+    return state?.players?.find((p: any) => p.id === this.socket.playerId);
   }
 
   start(question: string) {
