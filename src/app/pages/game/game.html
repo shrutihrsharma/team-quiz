@@ -4,9 +4,14 @@
   [class.host-view]="state.hostId === socket.playerId"
   [class.player-view]="state.hostId !== socket.playerId"
 >
+  <!-- GLOBAL SOUND EFFECTS -->
+  <audio #correctSound src="assets/sounds/correct-answer.mp3"></audio>
+  <audio #wrongSound src="assets/sounds/wrong-answer.mp3"></audio>
+  <audio #winSound src="assets/sounds/win.mp3"></audio>
+
   <!-- HEADER -->
   <header class="game-header">
-    <h1>🎮 NaaS Team Quiz</h1>
+    <h1>🎮 Team Quiz Night</h1>
 
     <div class="player-info" *ngIf="state.phase !== 'ENDED'">
       👤 {{ getCurrentPlayer(state)?.name }}
@@ -14,18 +19,15 @@
     </div>
 
     <div *ngIf="state.hostId === socket.playerId && state.phase !== 'ENDED'" class="share-box">
-      <span class="invite-link"> {{ origin }}/join/{{ socket.sessionId }} </span>
-
+      <span>{{ origin }}/join/{{ socket.sessionId }}</span>
       <button (click)="copyLink()">📋 Copy Invite</button>
     </div>
   </header>
 
-  <!-- ================= NORMAL GAME VIEW ================= -->
+  <!-- NORMAL GAME FLOW -->
   <ng-container *ngIf="state.phase !== 'ENDED'; else leaderboardView">
-    <!-- ROUND INFO -->
     <div class="round-info" *ngIf="state.roundName">⭐ Round: {{ state.roundName }}</div>
 
-    <!-- QUESTION AREA -->
     <section class="question-area">
       <div class="question-card" *ngIf="state.question; else waiting">
         {{ state.question }}
@@ -36,7 +38,6 @@
       </ng-template>
     </section>
 
-    <!-- BUZZER AREA -->
     <section class="action-area">
       <button
         class="buzz-btn"
@@ -51,7 +52,6 @@
       </div>
     </section>
 
-    <!-- TEAM SCORES -->
     <section class="scores-area">
       <h3>🏆 Team Scores</h3>
       <div class="scores-grid">
@@ -62,7 +62,6 @@
       </div>
     </section>
 
-    <!-- HOST CONTROLS -->
     <section *ngIf="state.hostId === socket.playerId" class="host-panel">
       <h3>👑 Host Controls</h3>
 
@@ -70,48 +69,48 @@
         ▶️ Start Next Question
       </button>
 
-      <button *ngIf="state.phase !== 'WAITING'" (click)="skipQuestion()">⏭ Skip Question</button>
-
       <button *ngIf="state.phase === 'QUESTION_DISPLAYED'" (click)="enableBuzzers()">
         🔔 Enable Buzzers
       </button>
 
       <div *ngIf="state.currentBuzzPlayerId" class="answer-controls">
-        <button class="correct" (click)="markCorrect()">✅ Correct</button>
-        <button class="wrong" (click)="markWrong()">❌ Wrong</button>
+        <button class="correct" (click)="markCorrect(); correctSound.play()">✅ Correct</button>
+        <button class="wrong" (click)="markWrong(); wrongSound.play()">❌ Wrong</button>
       </div>
 
       <button class="end-btn" (click)="endGame()">🏁 End Game</button>
     </section>
   </ng-container>
 
-  <!-- ================= LEADERBOARD VIEW ================= -->
+  <!-- FINAL LEADERBOARD -->
   <ng-template #leaderboardView>
-    <section class="leaderboard">
-      <h1>🏁 Game Over</h1>
-      <h2>🏆 Final Leaderboard</h2>
+    <div class="celebration-banner">🎉 Congratulations Winners! 🎉</div>
 
-      <div class="leaderboard-list">
+    <section class="leaderboard" (mouseenter)="winSound.play()">
+      <h1 class="leaderboard-title">🏁 GAME OVER</h1>
+      <h2 class="leaderboard-subtitle">🏆 Final Results</h2>
+
+      <div class="leaderboard-grid">
         <div
-          class="leaderboard-item"
-          *ngFor="let p of getPlayersSortedByScore(state.players)"
-          [class.winner]="p.score === state.topScore"
+          class="leaderboard-card"
+          *ngFor="let p of state.players"
+          [class.champion]="p.score === state.topScore"
         >
-          <span class="name">{{ p.name }}</span>
-          <span class="team">({{ p.team }})</span>
-          <span class="score">{{ p.score }}</span>
+          <div class="player-name">{{ p.name }}</div>
+          <div class="player-team">{{ p.team }}</div>
+          <div class="player-score">{{ p.score }}</div>
         </div>
       </div>
 
-      <!-- WINNER QR REWARD -->
+      <!-- INDIVIDUAL WINNER QR -->
       <div class="winner-reward" *ngIf="state.individualWinner as winner">
-        <h2>🎉 Winner: {{ winner.name }}</h2>
+        <h2 class="winner-name">🎉 Champion: {{ winner.name }}</h2>
 
         <div class="qr-box">
           <img src="assets/reward-qr.png" alt="Reward QR" />
         </div>
 
-        <p>Scan to claim your reward 🎁</p>
+        <p class="reward-msg">Scan to claim your reward 🎁</p>
       </div>
     </section>
   </ng-template>

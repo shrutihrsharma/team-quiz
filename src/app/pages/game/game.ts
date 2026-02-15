@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GameSocketService } from '../../services/game-socket.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
+// @ts-ignore: no type definitions for canvas-confetti
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-game',
@@ -28,6 +30,13 @@ export class GameComponent implements OnInit {
     }
 
     this.socket.connect(sessionId, playerName || 'Unknown', !!hostToken);
+
+    // ⭐ FIREWORKS TRIGGER
+    this.state$.subscribe((state) => {
+      if (state?.phase === 'ENDED') {
+        this.launchFireworks();
+      }
+    });
   }
 
   getCurrentPlayer(state: any) {
@@ -122,5 +131,33 @@ export class GameComponent implements OnInit {
       type: 'SKIP_QUESTION',
       playerId: this.socket.playerId,
     });
+  }
+
+  launchFireworks() {
+    document.getElementById('winnerSound')?.play();
+    const duration = 4000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 60,
+        origin: { x: 0 },
+      });
+
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 60,
+        origin: { x: 1 },
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+
+    frame();
   }
 }
