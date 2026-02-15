@@ -69,6 +69,7 @@ export class GameComponent implements OnInit {
   }
 
   buzz() {
+    (document.getElementById('buzzSound') as HTMLAudioElement)?.play();
     this.socket.send({
       type: 'BUZZ',
       playerId: this.socket.playerId,
