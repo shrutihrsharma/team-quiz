@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameSocketService } from '../../services/game-socket.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import confetti from 'canvas-confetti';
   styleUrl: './game.css',
 })
 export class GameComponent implements OnInit {
+   @ViewChild('winSound') winSoundRef!: ElementRef<HTMLAudioElement>;
   state$!: Observable<any>;
   origin = window.location.origin;
   playerName = localStorage.getItem('playerName') || 'Player';
@@ -134,7 +135,7 @@ export class GameComponent implements OnInit {
   }
 
   launchFireworks() {
-    document.getElementById('winnerSound')?.play();
+    this.winSoundRef?.nativeElement?.play();
     const duration = 4000;
     const end = Date.now() + duration;
 

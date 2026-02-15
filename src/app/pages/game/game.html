@@ -34,7 +34,20 @@
       </div>
 
       <ng-template #waiting>
-        <div class="question-card waiting">⏳ Waiting for next question…</div>
+        <div class="rules-card" *ngIf="state.phase === 'WAITING'; else nextQ">
+          <h3>🎮 Game Rules</h3>
+          <ul>
+            <li>Wait for the host to start the question.</li>
+            <li>When question appears, buzz fast!</li>
+            <li>Only first buzzer gets chance to answer.</li>
+            <li>Correct answer earns 1 point.</li>
+            <li>Highest individual score wins a reward 🎁</li>
+          </ul>
+        </div>
+
+        <ng-template #nextQ>
+          <div class="question-card waiting">⏳ Waiting for next question…</div>
+        </ng-template>
       </ng-template>
     </section>
 
