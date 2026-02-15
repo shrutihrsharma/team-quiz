@@ -119,10 +119,12 @@
       <div class="leaderboard-grid">
         <div
           class="leaderboard-card"
-          *ngFor="let p of state.players"
-          [class.champion]="p.score === state.topScore"
+          *ngFor="let p of state.players | orderByScore | slice: 0 : 3; let i = index"
+          [class.champion]="i === 0"
         >
-          <div class="medal" *ngIf="p.score === state.topScore">🥇</div>
+          <div class="medal">
+            {{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}
+          </div>
 
           <div class="player-name">{{ p.name }} <span *ngIf="p.id === state.hostId">👑</span></div>
 

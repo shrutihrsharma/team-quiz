@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 // @ts-ignore: no type definitions for canvas-confetti
 import confetti from 'canvas-confetti';
+import { OrderByScorePipe } from '../../pipes/order-by-score-pipe';
 
 @Component({
   selector: 'app-game',
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule, AsyncPipe, OrderByScorePipe],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
