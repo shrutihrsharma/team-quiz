@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameSocketService } from '../../services/game-socket.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe, JsonPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 // @ts-ignore: no type definitions for canvas-confetti
 import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-game',
-  imports: [CommonModule, AsyncPipe, JsonPipe],
+  imports: [CommonModule, AsyncPipe],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
