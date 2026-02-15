@@ -24,8 +24,10 @@ export class GameSocketService {
 
     this.ws.onopen = () => {
       console.log('Sending JOIN');
-      this.playerId = localStorage.getItem('playerId') || crypto.randomUUID();
-      localStorage.setItem('playerId', this.playerId);
+      const key = `playerId_${sessionId}`;
+      this.playerId = localStorage.getItem(key) || crypto.randomUUID();
+      localStorage.setItem(key, this.playerId);
+
       this.ws.send(
         JSON.stringify({
           type: 'JOIN',
