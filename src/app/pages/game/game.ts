@@ -69,11 +69,11 @@ export class GameComponent implements OnInit {
   }
 
   buzz() {
-    (document.getElementById('buzzSound') as HTMLAudioElement)?.play();
     this.socket.send({
       type: 'BUZZ',
       playerId: this.socket.playerId,
     });
+    (document.getElementById('buzzSound') as HTMLAudioElement)?.play();
   }
 
   getWinner(state: any) {
@@ -89,19 +89,23 @@ export class GameComponent implements OnInit {
   }
 
   markCorrect() {
-    (document.getElementById('correctSound') as HTMLAudioElement)?.play();
     this.socket.send({
       type: 'MARK_CORRECT',
       playerId: this.socket.playerId,
     });
+    setTimeout(() => {
+      (document.getElementById('correctSound') as HTMLAudioElement)?.play();
+    }, 200);
   }
 
   markWrong() {
-    (document.getElementById('wrongSound') as HTMLAudioElement)?.play();
     this.socket.send({
       type: 'MARK_WRONG',
       playerId: this.socket.playerId,
     });
+    setTimeout(() => {
+      (document.getElementById('wrongSound') as HTMLAudioElement)?.play();
+    }, 200);
   }
 
   nextQuestion() {
@@ -138,7 +142,9 @@ export class GameComponent implements OnInit {
   }
 
   launchFireworks() {
-    (document.getElementById('winnerSound') as HTMLAudioElement)?.play();
+    setTimeout(() => {
+      (document.getElementById('winnerSound') as HTMLAudioElement)?.play();
+    }, 500);
 
     const duration = 4000;
     const end = Date.now() + duration;
