@@ -4,6 +4,9 @@
   [class.host-view]="state.hostId === socket.playerId"
   [class.player-view]="state.hostId !== socket.playerId"
 >
+<audio id="correctSound" src="assets/sounds/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/sounds/wrong.mp3"></audio>
+<audio id="winnerSound" src="assets/sounds/winner.mp3"></audio>
   <!-- HEADER -->
   <header class="game-header">
     <h1>🎮 Team Quiz Night</h1>
