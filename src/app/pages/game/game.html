@@ -82,6 +82,12 @@
         <button *ngIf="state.phase === 'WAITING'" (click)="nextQuestion()">
           ▶️ Start Game / Next Question
         </button>
+        <button
+          *ngIf="state.phase !== 'WAITING' && state.phase !== 'ENDED'"
+          (click)="skipQuestion()"
+        >
+          ⏭ Skip Question
+        </button>
 
         <!-- Correct/Wrong -->
         <div *ngIf="state.currentBuzzPlayerId">
@@ -91,6 +97,15 @@
 
         <button class="end-btn" (click)="endGame()">🏁 End Game</button>
       </section>
+
+      <div *ngIf="state.hostId === socket.playerId" class="jump-panel">
+        <h4>Jump to Question</h4>
+
+        <input #round type="number" min="1" placeholder="Round #" />
+        <input #question type="number" min="1" placeholder="Question #" />
+
+        <button (click)="jump(+round.value, +question.value)">Jump</button>
+      </div>
 
       <div class="winner-banner" *ngIf="getWinner(state) as winner">
         ⚡ {{ winner.name }}

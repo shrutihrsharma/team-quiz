@@ -174,4 +174,13 @@ export class GameComponent implements OnInit {
 
     frame();
   }
+
+  jump(round: number, question: number) {
+    this.socket.send({
+      type: 'JUMP_TO',
+      playerId: this.socket.playerId,
+      roundIndex: Number(round) - 1,
+      questionIndex: Number(question),
+    });
+  }
 }
