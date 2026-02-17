@@ -37,6 +37,9 @@ export class GameComponent implements OnInit {
       if (state?.phase === 'ENDED') {
         this.launchFireworks();
       }
+      if (state?.phase === 'ANSWER_REVEAL') {
+        (document.getElementById('correctSound') as HTMLAudioElement)?.play();
+      }
     });
   }
 

@@ -4,10 +4,10 @@
   [class.host-view]="state.hostId === socket.playerId"
   [class.player-view]="state.hostId !== socket.playerId"
 >
-<audio id="correctSound" src="assets/sounds/correct-answer.mp3"></audio>
-<audio id="wrongSound" src="assets/sounds/wrong-answer.mp3"></audio>
-<audio id="winnerSound" src="assets/sounds/win.mp3"></audio>
-<audio id="buzzSound" src="assets/sounds/buzz.mp3"></audio>
+  <audio id="correctSound" src="assets/sounds/correct-answer.mp3"></audio>
+  <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3"></audio>
+  <audio id="winnerSound" src="assets/sounds/win.mp3"></audio>
+  <audio id="buzzSound" src="assets/sounds/buzz.mp3"></audio>
   <!-- HEADER -->
   <header class="game-header">
     <h1>🎮 Team Quiz Night</h1>
@@ -33,8 +33,19 @@
     <!-- QUESTION -->
     <section class="question-area">
       <div class="question-card" *ngIf="state.question; else waiting">
-        {{ state.question }}
+        <h2>{{ state.question }}</h2>
+
+        <img
+          *ngIf="state.questionType === 'image'"
+          [src]="'assets/' + state.mediaUrl"
+          class="quiz-media"
+        />
+
+        <audio *ngIf="state.questionType === 'audio'" controls autoplay class="quiz-media">
+          <source [src]="'assets/' + state.mediaUrl" />
+        </audio>
       </div>
+      <div *ngIf="state.answer" class="answer-reveal">✅ Correct Answer: {{ state.answer }}</div>
 
       <ng-template #waiting>
         <div class="rules-card" *ngIf="state.phase === 'WAITING'; else nextQ">
