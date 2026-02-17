@@ -316,8 +316,23 @@
 .quiz-media {
   background: #fff;
   padding: 10px;
-  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
+.winner-title {
+  text-align: center;
+  margin-top: 20px;
+}
 
+.reward-qr {
+  width: 220px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
 
+.reward-text {
+  text-align: center;
+  font-weight: 600;
+}

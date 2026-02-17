@@ -155,12 +155,12 @@
         </div>
       </div>
 
-      <div class="winner-reward" *ngIf="state.individualWinner as winner">
-        <h2>🎉 Champion: {{ winner.name }}</h2>
-        <div class="qr-box">
-          <img src="assets/reward-qr.png" alt="Reward QR" />
-        </div>
-        <p>Scan to claim your reward 🎁</p>
+      <div class="winner-reward" *ngIf="state.phase === 'ENDED' && state.individualWinner">
+        <h2 class="winner-title">🏆 Champion: {{ state.individualWinner.name }}</h2>
+
+        <img src="assets/reward.png" class="reward-qr" />
+
+        <p class="reward-text">Scan to claim your reward 🎁</p>
       </div>
     </section>
   </ng-template>
