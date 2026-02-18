@@ -41,7 +41,7 @@
           class="quiz-media"
         />
 
-        <audio *ngIf="state.questionType === 'audio'" controls autoplay class="quiz-media">
+        <audio *ngIf="state.questionType === 'audio'" controls autoplay>
           <source [src]="'assets/' + state.mediaUrl" />
         </audio>
       </div>
