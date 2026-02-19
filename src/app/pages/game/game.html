@@ -41,8 +41,12 @@
           class="quiz-media"
         />
 
-        <audio *ngIf="state.questionType === 'audio'" controls autoplay  [attr.src]="'assets/' + state.mediaUrl">
-        </audio>
+        <audio
+          *ngIf="state.questionType === 'audio'"
+          controls
+          autoplay
+          [attr.src]="'assets/' + state.mediaUrl"
+        ></audio>
       </div>
       <div *ngIf="state.answer" class="answer-reveal">✅ Correct Answer: {{ state.answer }}</div>
 
@@ -95,6 +99,9 @@
         </div>
 
         <button class="end-btn" (click)="endGame()">🏁 End Game</button>
+        <button *ngIf="state.hostId === socket.playerId" (click)="copyTeams(state.players)">
+          📋 Copy Teams List
+        </button>
       </section>
 
       <div class="winner-banner" *ngIf="getWinner(state) as winner">

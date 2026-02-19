@@ -181,4 +181,32 @@ export class GameComponent implements OnInit {
 
     frame();
   }
+
+  getTeamsFormatted(players: any[]) {
+    if (!players) return '';
+
+    const teams: Record<string, string[]> = {};
+
+    players.forEach((p) => {
+      if (!teams[p.team]) teams[p.team] = [];
+      teams[p.team].push(p.name);
+    });
+
+    let text = '🎮 TEAM LIST\n\n';
+
+    Object.entries(teams).forEach(([team, members]) => {
+      text += `${team}\n`;
+      members.forEach((m) => (text += `• ${m}\n`));
+      text += '\n';
+    });
+
+    return text;
+  }
+
+  copyTeams(players: any[]) {
+    const text = this.getTeamsFormatted(players);
+
+    navigator.clipboard.writeText(text);
+    alert('Teams copied! Share on Teams/WhatsApp 🙂');
+  }
 }
