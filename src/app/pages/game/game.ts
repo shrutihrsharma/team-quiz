@@ -40,6 +40,13 @@ export class GameComponent implements OnInit {
       if (state?.phase === 'ANSWER_REVEAL') {
         (document.getElementById('correctSound') as HTMLAudioElement)?.play();
       }
+      if (state?.questionType !== 'audio') {
+        const audio = document.querySelector('audio');
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      }
     });
   }
 

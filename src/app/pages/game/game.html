@@ -41,8 +41,7 @@
           class="quiz-media"
         />
 
-        <audio *ngIf="state.questionType === 'audio'" controls autoplay>
-          <source [src]="'assets/' + state.mediaUrl" />
+        <audio *ngIf="state.questionType === 'audio'" controls autoplay  [attr.src]="'assets/' + state.mediaUrl">
         </audio>
       </div>
       <div *ngIf="state.answer" class="answer-reveal">✅ Correct Answer: {{ state.answer }}</div>
