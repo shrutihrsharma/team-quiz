@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  backendUrl: 'https://team-quiz-backend.shrutihrsharma.workers.dev'
+  backendUrl: 'https://backend-render-1ys0.onrender.com'
 };
