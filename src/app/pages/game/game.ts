@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
 ├── images/
 ├── audio/
 └── video/`;
-  sampleQuizPack = `[
+  sampleQuizJson = `[
   {
     "name": "Round Name",
     "questions": [
