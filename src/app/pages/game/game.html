@@ -37,7 +37,7 @@
 
         <img
           *ngIf="state.questionType === 'image'"
-          [src]="'assets/' + state.mediaUrl"
+          [src]="backendUrl + state.mediaUrl"
           class="quiz-media"
         />
 
@@ -45,7 +45,7 @@
           *ngIf="state.questionType === 'audio'"
           controls
           autoplay
-          [attr.src]="'assets/' + state.mediaUrl"
+          [attr.src]="backendUrl + state.mediaUrl"
         ></audio>
       </div>
       <div *ngIf="state.answer" class="answer-reveal">✅ Correct Answer: {{ state.answer }}</div>
