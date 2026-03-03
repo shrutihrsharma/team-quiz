@@ -18,6 +18,7 @@ export class GameComponent implements OnInit {
   origin = window.location.origin;
   playerName = localStorage.getItem('playerName') || 'Player';
   packUploaded = false;
+  showGuide = false;
 
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
@@ -60,12 +61,14 @@ export class GameComponent implements OnInit {
     fetch(`${environment.backendUrl}/upload-pack/${this.socket.sessionId}`, {
       method: 'POST',
       body: formData,
-    }).then(() => {
-      this.packUploaded = true;
-      alert('Quiz pack uploaded successfully!');
-    }).catch(() => {
-      alert('Failed to upload quiz pack. Please try again.');
-    });
+    })
+      .then(() => {
+        this.packUploaded = true;
+        alert('Quiz pack uploaded successfully!');
+      })
+      .catch(() => {
+        alert('Failed to upload quiz pack. Please try again.');
+      });
   }
 
   getCurrentPlayer(state: any) {
@@ -226,5 +229,13 @@ export class GameComponent implements OnInit {
 
     navigator.clipboard.writeText(text);
     alert('Teams copied! Share on Teams/WhatsApp 🙂');
+  }
+
+  openGuide() {
+    this.showGuide = true;
+  }
+
+  closeGuide() {
+    this.showGuide = false;
   }
 }

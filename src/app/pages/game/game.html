@@ -79,14 +79,20 @@
       </button>
 
       <section *ngIf="state.hostId === socket.playerId" class="host-panel">
-        <div *ngIf="state.phase === 'WAITING'" class="upload-pack">
-          <h4>📦 Upload Quiz Pack</h4>
+        <div class="upload-section" *ngIf="!state.packUploaded">
+          <h3>📦 Upload Quiz Pack</h3>
 
-          <input type="file" (change)="uploadPack($event)" accept=".zip" [disabled]="packUploaded" />
+          <input type="file" (change)="uploadPack($event)" accept=".zip" />
 
-          <p class="small-note">Upload a ZIP containing quiz.json and media folders.</p>
+          <div class="upload-hint">
+            Max size: 20MB | ZIP only
+            <button class="link-btn" (click)="showGuide = true">
+              📘 How to Prepare Quiz Pack?
+            </button>
+          </div>
         </div>
         <h3>👑 Host Controls</h3>
+        <button (click)="resetGame()">🔄 Restart Game</button>
 
         <!-- Start game -->
         <button *ngIf="state.phase === 'WAITING'" (click)="nextQuestion()">
@@ -177,4 +183,55 @@
       </div>
     </section>
   </ng-template>
+</div>
+
+<div class="modal-backdrop" *ngIf="showGuide">
+  <div class="modal">
+    <h2>📘 Quiz Pack Instructions</h2>
+
+    <h4>Required ZIP Structure</h4>
+    <pre>
+my-quiz-pack.zip
+│
+├── quiz.json
+├── images/
+├── audio/
+└── video/
+    </pre>
+
+    <h4>quiz.json Format</h4>
+    <pre>
+[
+  {
+    "name": "Round Name",
+    "questions": [
+      {
+        "prompt": "Question text",
+        "answer": "Correct answer"
+      },
+      {
+        "prompt": "Identify logo",
+        "answer": "Docker",
+        "type": "image",
+        "mediaFile": "images/docker.png"
+      }
+    ]
+  }
+]
+    </pre>
+
+    <h4>Allowed Media</h4>
+    <ul>
+      <li>Images: .jpg .png .webp</li>
+      <li>Audio: .mp3 .wav</li>
+      <li>Video: .mp4 .webm</li>
+      <li>Max upload size: 20MB</li>
+    </ul>
+
+    <a [href]="backendUrl + '/quiz-template'" target="_blank">
+      📥 Download Sample Template
+    </a>
+
+    <button (click)="showGuide = false">Close</button>
+  </div>
 </div>
