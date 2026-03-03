@@ -19,6 +19,30 @@ export class GameComponent implements OnInit {
   playerName = localStorage.getItem('playerName') || 'Player';
   packUploaded = false;
   showGuide = false;
+  backendUrl = environment.backendUrl; 
+  requiredZipStructure = `my-quiz-pack.zip
+│
+├── quiz.json
+├── images/
+├── audio/
+└── video/`;
+sampleQuizPack = `[
+  {
+    "name": "Round Name",
+    "questions": [
+      {
+        "prompt": "Question text",
+        "answer": "Correct answer"
+      },
+      {
+        "prompt": "Identify logo",
+        "answer": "Docker",
+        "type": "image",
+        "mediaFile": "images/docker.png"
+      }
+    ]
+  }
+]`;
 
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
