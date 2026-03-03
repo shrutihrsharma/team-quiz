@@ -19,14 +19,14 @@ export class GameComponent implements OnInit {
   playerName = localStorage.getItem('playerName') || 'Player';
   packUploaded = false;
   showGuide = false;
-  backendUrl = environment.backendUrl; 
+  backendUrl = environment.backendUrl;
   requiredZipStructure = `my-quiz-pack.zip
 │
 ├── quiz.json
 ├── images/
 ├── audio/
 └── video/`;
-sampleQuizPack = `[
+  sampleQuizPack = `[
   {
     "name": "Round Name",
     "questions": [
@@ -255,11 +255,10 @@ sampleQuizPack = `[
     alert('Teams copied! Share on Teams/WhatsApp 🙂');
   }
 
-  openGuide() {
-    this.showGuide = true;
-  }
-
-  closeGuide() {
-    this.showGuide = false;
+  resetGame() {
+    this.socket.send({
+      type: 'RESET_GAME',
+      playerId: this.socket.playerId,
+    });
   }
 }
