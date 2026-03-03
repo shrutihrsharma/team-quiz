@@ -79,6 +79,13 @@
       </button>
 
       <section *ngIf="state.hostId === socket.playerId" class="host-panel">
+        <div *ngIf="state.phase === 'WAITING'" class="upload-pack">
+          <h4>📦 Upload Quiz Pack</h4>
+
+          <input type="file" (change)="uploadPack($event)" accept=".zip" [disabled]="packUploaded" />
+
+          <p class="small-note">Upload a ZIP containing quiz.json and media folders.</p>
+        </div>
         <h3>👑 Host Controls</h3>
 
         <!-- Start game -->

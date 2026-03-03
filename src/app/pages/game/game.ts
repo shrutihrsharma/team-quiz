@@ -5,6 +5,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 // @ts-ignore: no type definitions for canvas-confetti
 import confetti from 'canvas-confetti';
 import { OrderByScorePipe } from '../../pipes/order-by-score-pipe';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-game',
@@ -16,6 +17,7 @@ export class GameComponent implements OnInit {
   state$!: Observable<any>;
   origin = window.location.origin;
   playerName = localStorage.getItem('playerName') || 'Player';
+  packUploaded = false;
 
   constructor(public socket: GameSocketService) {
     this.state$ = this.socket.state$;
@@ -47,6 +49,22 @@ export class GameComponent implements OnInit {
           audio.currentTime = 0;
         }
       }
+    });
+  }
+
+  uploadPack(event: any) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch(`${environment.backendUrl}/upload-pack/${this.socket.sessionId}`, {
+      method: 'POST',
+      body: formData,
+    }).then(() => {
+      this.packUploaded = true;
+      alert('Quiz pack uploaded successfully!');
+    }).catch(() => {
+      alert('Failed to upload quiz pack. Please try again.');
     });
   }
 
