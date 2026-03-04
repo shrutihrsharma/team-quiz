@@ -6,6 +6,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import confetti from 'canvas-confetti';
 import { OrderByScorePipe } from '../../pipes/order-by-score-pipe';
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-game',
@@ -20,6 +21,7 @@ export class GameComponent implements OnInit {
   packUploaded = false;
   showGuide = false;
   backendUrl = environment.backendUrl;
+  quizPackUrl = '';
   requiredZipStructure = `my-quiz-pack.zip
 │
 ├── quiz.json
@@ -44,7 +46,7 @@ export class GameComponent implements OnInit {
   }
 ]`;
 
-  constructor(public socket: GameSocketService) {
+  constructor(public socket: GameSocketService, public http: HttpClient) {
     this.state$ = this.socket.state$;
   }
   ngOnInit(): void {
@@ -260,5 +262,15 @@ export class GameComponent implements OnInit {
       type: 'RESET_GAME',
       playerId: this.socket.playerId,
     });
+  }
+
+  loadQuizPack() {
+    this.http
+      .post(this.backendUrl + '/load-pack-from-url/' + this.socket.sessionId, {
+        url: this.quizPackUrl,
+      })
+      .subscribe(() => {
+        alert('Quiz pack loaded!');
+      });
   }
 }
