@@ -7,10 +7,11 @@ import confetti from 'canvas-confetti';
 import { OrderByScorePipe } from '../../pipes/order-by-score-pipe';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game',
-  imports: [CommonModule, AsyncPipe, OrderByScorePipe],
+  imports: [FormsModule, CommonModule, AsyncPipe, OrderByScorePipe],
   templateUrl: './game.html',
   styleUrl: './game.css',
 })
