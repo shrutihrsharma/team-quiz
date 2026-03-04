@@ -79,7 +79,7 @@
       </button>
 
       <section *ngIf="state.hostId === socket.playerId" class="host-panel">
-        <!-- <div class="upload-section" *ngIf="!state.packUploaded">
+        <div class="upload-section" *ngIf="!packUploaded">
           <h3>📦 Upload Quiz Pack</h3>
 
           <input type="file" (change)="uploadPack($event)" accept=".zip" />
@@ -90,10 +90,10 @@
               📘 How to Prepare Quiz Pack?
             </button>
           </div>
-        </div> -->
-        <input [(ngModel)]="quizPackUrl" placeholder="Paste GitHub ZIP URL" *ngIf="packUploaded"/>
+          <input [(ngModel)]="quizPackUrl" placeholder="Paste GitHub ZIP URL" />
 
-        <button (click)="loadQuizPack()" *ngIf="!packUploaded">Load Quiz Pack</button>
+          <button (click)="loadQuizPack()">Load Quiz Pack</button>
+        </div>
         <h3>👑 Host Controls</h3>
         <button (click)="resetGame()">🔄 Restart Game</button>
 

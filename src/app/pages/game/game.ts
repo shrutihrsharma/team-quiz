@@ -47,7 +47,10 @@ export class GameComponent implements OnInit {
   }
 ]`;
 
-  constructor(public socket: GameSocketService, public http: HttpClient) {
+  constructor(
+    public socket: GameSocketService,
+    public http: HttpClient,
+  ) {
     this.state$ = this.socket.state$;
   }
   ngOnInit(): void {
