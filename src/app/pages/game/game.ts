@@ -271,6 +271,7 @@ export class GameComponent implements OnInit {
         url: this.quizPackUrl,
       })
       .subscribe(() => {
+        this.packUploaded = true;
         alert('Quiz pack loaded!');
       });
   }

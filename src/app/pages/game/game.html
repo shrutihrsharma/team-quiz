@@ -91,9 +91,9 @@
             </button>
           </div>
         </div> -->
-        <input [(ngModel)]="quizPackUrl" placeholder="Paste GitHub ZIP URL" />
+        <input [(ngModel)]="quizPackUrl" placeholder="Paste GitHub ZIP URL" *ngIf="packUploaded"/>
 
-        <button (click)="loadQuizPack()">Load Quiz Pack</button>
+        <button (click)="loadQuizPack()" *ngIf="!packUploaded">Load Quiz Pack</button>
         <h3>👑 Host Controls</h3>
         <button (click)="resetGame()">🔄 Restart Game</button>
 
